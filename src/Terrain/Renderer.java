@@ -6,26 +6,25 @@ import processing.core.PConstants;
 
 public class Renderer {
 
-	int width, height;
+	float width, height;
 	automatedTraversal sketch;
 	
 	public Renderer(automatedTraversal _sketch, int _width, int _height) {
 		System.out.println("Renderer created");
-		width = _width;
-		height = _height;
+		width = (float)_width;
+		height = (float)_height;
 		sketch = _sketch;
 	}
 	
-	public void update(Location[][] _map) {
-		render(_map);
+	public void update(Location[][] _map, float _xoff, float _yoff, float _zoff) {
+		render(_map, _xoff, _yoff, _zoff);
 	}
 	
-	public void render(Location[][] _map) {
+	public void render(Location[][] _map, float _xoff, float _yoff, float _zoff) {
 		int rows = _map[0].length;
 		int cols = _map.length;
 		sketch.push();
-
-		sketch.translate(-width/2 + width/cols/2, -height/2, -200);
+		sketch.translate(_xoff, _yoff, _zoff);
 		sketch.directionalLight(255,255,255,0,0,-1);
 		sketch.strokeWeight(.5f);
 		

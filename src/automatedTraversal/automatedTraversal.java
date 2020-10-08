@@ -1,5 +1,8 @@
 package automatedTraversal;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 import Terrain.Terrain;
 import Vehicle.Vehicle;
 import processing.core.PApplet;
@@ -10,27 +13,35 @@ public class automatedTraversal extends PApplet {
 	
 	public Terrain terrain;
 	public Vehicle rover;
+	float terrainX;
+	float terrainY;
+	float terrainZ;
 	
-	public automatedTraversal() {
-		
-	}
+	public automatedTraversal() {}
 	
 	public void settings() {
 		size(800,600, P3D);
 	}
 
 	public void setup() {
-		terrain = new Terrain(this, width*2, height*2, 40, 40);
-		rover = new Vehicle(this, terrain.getCenterPoint());
+		int terrainWidth = width*2;
+		int terrainHeight = height*2;
+		int terrainCols = 40;
+		int terrainRows = 40;
+		terrainX = -(float)width/2f;
+		terrainY = -(float)height*(5f/6f);
+		terrainZ = -400f;
+		terrain = new Terrain(this, terrainWidth, terrainHeight, terrainRows, terrainCols, terrainX, terrainY, terrainZ);
+		rover = new Vehicle(this, terrainWidth, terrainHeight, terrainRows, terrainCols);
 	}
 	
 	public void draw() {
 		background(51);
 		push();
-		translate(width/2, height/2, 0);
 		rotateX(PConstants.PI/6);
+		rotateZ(PConstants.PI/6);
 		terrain.update();
-		rover.update(terrain.getCenterPoint());
+		rover.update(terrainX, terrainY, terrainZ, terrain.getCenterPoint().getHeight());
 		pop();
 	}
 	
