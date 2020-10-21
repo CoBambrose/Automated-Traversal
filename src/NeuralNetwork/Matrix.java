@@ -2,30 +2,30 @@ package NeuralNetwork;
 
 public class Matrix {
 	
-	int rows;
+	int rows; // dimensions of matrix
 	int cols;
-	public double[][] data;
+	public double[][] data; // values stored in the matrix
 
 	public Matrix(int _rows, int _cols) {
-		this.rows = _rows;
-		this.cols = _cols;
-		this.data = new double[_rows][_cols];
-		this.fill(0);
+		rows = _rows;
+		cols = _cols;
+		data = new double[_rows][_cols];
+		fill(0); // matrix begins as all 0s
 	}
 	
 	public void fill(double _val) {
-		for (int i = 0; i < this.rows; i++) {
-			for (int j = 0; j < this.cols; j++) {
-				this.data[i][j] = _val;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				data[i][j] = _val;
 			}
 		}
 	}
 	
 	public Matrix copy() {
-		Matrix _m = new Matrix(this.rows, this.cols);
-		for (int i = 0; i < this.rows; i++) {
-			for (int j = 0; j < this.cols; j++) {
-				_m.data[i][j] = this.data[i][j];
+		Matrix _m = new Matrix(rows, cols);
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				_m.data[i][j] = data[i][j];
 			}
 		}
 		return _m;
@@ -53,30 +53,30 @@ public class Matrix {
 	}
 	
 	public double[] toArray() {
-		double[] _arr = new double[this.rows * this.cols];
-		for (int i = 0; i < this.rows; i++) {
-			for (int j = 0; j < this.cols; j++) {
-				_arr[i*this.cols + j] = this.data[i][j];
+		double[] _arr = new double[rows * cols];
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				_arr[i*cols + j] = data[i][j];
 			}
 		}
 		return _arr;
 	}
 	
 	public void randomise() {
-		for (int i = 0; i < this.rows; i++) {
-			for (int j = 0; j < this.cols; j++) {
-				this.data[i][j] = (double) (Math.random()*2f - 1f);
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				data[i][j] = (double) (Math.random()*2f - 1f);
 			}
 		}
 	}
 	
 	public Matrix add(Matrix _b) {
-		if (this.rows != _b.rows || this.cols != _b.cols) {
+		if (rows != _b.rows || cols != _b.cols) {
 			System.out.println("Cols and rows don't match [ add ]");
 		}
-		for (int i = 0; i < this.rows; i++) {
-			for (int j = 0; j < this.cols; j++) {
-				this.data[i][j] += _b.data[i][j];
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				data[i][j] += _b.data[i][j];
 			}
 		}
 		return this;
@@ -110,39 +110,39 @@ public class Matrix {
 	}
 	
 	public Matrix scale(double _scalar) {
-		for (int i = 0; i < this.rows; i++) {
-			for (int j = 0; j < this.cols; j++) {
-				this.data[i][j] *= _scalar;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				data[i][j] *= _scalar;
 			}
 		}
 		return this;
 	}
 	
 	public Matrix hadamard(Matrix _b) {
-		if (this.rows != _b.rows || this.cols != _b.cols) {
+		if (rows != _b.rows || cols != _b.cols) {
 			System.out.println("Cols and rows don't match [ hadamard ]");
 		}
-		for (int i = 0; i < this.rows; i++) {
-			for (int j = 0; j < this.cols; j++) {
-				this.data[i][j] *= _b.data[i][j];
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				data[i][j] *= _b.data[i][j];
 			}
 		}
 		return this;
 	}
 	
 	public Matrix sigmoid() {
-		for (int i = 0; i < this.rows; i++) {
-			for (int j = 0; j < this.cols; j++) {
-				this.data[i][j] = (double) (1d / (1d + Math.exp(-this.data[i][j])));
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				data[i][j] = (double) (1d / (1d + Math.exp(-data[i][j])));
 			}
 		}
 		return this;
 	}
 	
 	public Matrix dsigmoid() {
-		for (int i = 0; i < this.rows; i++) {
-			for (int j = 0; j < this.cols; j++) {
-				this.data[i][j] = (double) (this.data[i][j] * (1d - this.data[i][j]));
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				data[i][j] = (double) (data[i][j] * (1d - data[i][j]));
 			}
 		}
 		return this;
@@ -150,10 +150,10 @@ public class Matrix {
 	
 	public void print() {
 		String s = "[\n";
-		for (int i = 0; i < this.rows; i++) {
+		for (int i = 0; i < rows; i++) {
 			s += "  [ ";
-			for (int j = 0; j < this.cols; j++) {
-				s += String.valueOf(this.data[i][j]) + ", ";
+			for (int j = 0; j < cols; j++) {
+				s += String.valueOf(data[i][j]) + ", ";
 			}
 			s += "]\n";
 		}
