@@ -5,6 +5,7 @@ import processing.core.PApplet;
 
 public class Generator {
 	
+	// declare variables
 	int width, height, rows, cols;
 	float roughness, magnitude;
 	automatedTraversal sketch;
@@ -12,6 +13,8 @@ public class Generator {
 	
 	public Generator(automatedTraversal _sketch, int _width, int _height, int _rows, int _cols, float _roughness, float _magnitude) {
 		System.out.println("Generator created");
+		
+		// initialise variables
 		width  = _width;
 		height = _height;
 		rows = _rows;
@@ -19,13 +22,21 @@ public class Generator {
 		roughness = _roughness;
 		magnitude = _magnitude;
 		sketch = _sketch;
+		
+		// generate terrain map
 		map = generateMap(0f, 0f);
 	}
 	
+	// generate terrain map
 	public Location[][] generateMap(float _xoff, float _yoff) {
+		// create temporary variable for the map
 		Location[][] tempMap = new Location[cols][rows];
+		
+		// determine distances between location nodes
 		float colSize = (float)width / (float)cols;
 		float rowSize = (float)height / (float)rows;
+		
+		// for each node in the map
 		for (int i = 0; i < cols; i++) {
 			for (int j = 0; j < rows; j++) {
 				// initialise location

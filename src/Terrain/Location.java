@@ -4,12 +4,14 @@ import processing.core.PVector;
 
 public class Location {
 	
+	// declare variables
 	int row, col;
 	PVector pos;
 	private float height, temperature, density;
 	private int state;
 	
 	public Location(int _row, int _col, float _x, float _y) {
+		// initialise variables
 		row = _row;
 		col = _col;
 		pos = new PVector(_x, _y);

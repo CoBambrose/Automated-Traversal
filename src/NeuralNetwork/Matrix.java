@@ -13,7 +13,7 @@ public class Matrix {
 		fill(0); // matrix begins as all 0s
 	}
 	
-	public void fill(double _val) {
+	public void fill(double _val) { // fills with a single value
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				data[i][j] = _val;
@@ -21,7 +21,7 @@ public class Matrix {
 		}
 	}
 	
-	public Matrix copy() {
+	public Matrix copy() { // returns a copied matrix
 		Matrix _m = new Matrix(rows, cols);
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
@@ -31,7 +31,7 @@ public class Matrix {
 		return _m;
 	}
 	
-	public static Matrix toMatrix(double[] _arr) {
+	public static Matrix toMatrix(double[] _arr) { // converts 2D array to matrix object
 		Matrix _m = new Matrix(_arr.length, 1);
 		for (int i = 0; i < _arr.length; i++) {
 			_m.data[i][0] = _arr[i];
@@ -39,7 +39,7 @@ public class Matrix {
 		return _m;
 	}
 	
-	public static Matrix subtract(Matrix _a, Matrix _b) {
+	public static Matrix subtract(Matrix _a, Matrix _b) { // subtracts two matrices
 		if (_a.rows != _b.rows || _a.cols != _b.cols) {
 			System.out.println("Cols and rows don't match [ Subtract ]");
 		}
@@ -52,7 +52,7 @@ public class Matrix {
 		return _m;
 	}
 	
-	public double[] toArray() {
+	public double[] toArray() { // converts matrix object to 2D array
 		double[] _arr = new double[rows * cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
@@ -62,7 +62,7 @@ public class Matrix {
 		return _arr;
 	}
 	
-	public void randomise() {
+	public void randomise() { // randomises values in the matrix
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				data[i][j] = (double) (Math.random()*2f - 1f);
@@ -70,7 +70,7 @@ public class Matrix {
 		}
 	}
 	
-	public Matrix add(Matrix _b) {
+	public Matrix add(Matrix _b) { // adds matrix B to self
 		if (rows != _b.rows || cols != _b.cols) {
 			System.out.println("Cols and rows don't match [ add ]");
 		}
@@ -82,7 +82,7 @@ public class Matrix {
 		return this;
 	}
 	
-	public static Matrix transpose(Matrix _a) {
+	public static Matrix transpose(Matrix _a) { // transposes a given matrix
 		Matrix _m = new Matrix(_a.cols, _a.rows);
 		for (int i = 0; i < _a.rows; i++) {
 			for (int j = 0; j < _a.cols; j++) {
@@ -92,7 +92,7 @@ public class Matrix {
 		return _m;
 	}
 	
-	public static Matrix multiply(Matrix _a, Matrix _b) {
+	public static Matrix multiply(Matrix _a, Matrix _b) { // multiplies two matrices
 		if (_a.cols != _b.rows) {
 			System.out.println("A cols and B rows don't match [ multiply ]");
 		}
@@ -109,7 +109,7 @@ public class Matrix {
 		return _m;
 	}
 	
-	public Matrix scale(double _scalar) {
+	public Matrix scale(double _scalar) { // multiples all elements of self by a scalar
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				data[i][j] *= _scalar;
@@ -118,7 +118,7 @@ public class Matrix {
 		return this;
 	}
 	
-	public Matrix hadamard(Matrix _b) {
+	public Matrix hadamard(Matrix _b) { // multiples all elements with a matrix B element wise
 		if (rows != _b.rows || cols != _b.cols) {
 			System.out.println("Cols and rows don't match [ hadamard ]");
 		}
@@ -130,7 +130,7 @@ public class Matrix {
 		return this;
 	}
 	
-	public Matrix sigmoid() {
+	public Matrix sigmoid() { // performs sigmoid(x) on all elements of self
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				data[i][j] = (double) (1d / (1d + Math.exp(-data[i][j])));
@@ -139,7 +139,7 @@ public class Matrix {
 		return this;
 	}
 	
-	public Matrix dsigmoid() {
+	public Matrix dsigmoid() { // performs part of dsigmoid(x)/dx
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				data[i][j] = (double) (data[i][j] * (1d - data[i][j]));
@@ -148,7 +148,7 @@ public class Matrix {
 		return this;
 	}
 	
-	public void print() {
+	public void print() { // prints formatted string of matrix to console
 		String s = "[\n";
 		for (int i = 0; i < rows; i++) {
 			s += "  [ ";

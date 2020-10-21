@@ -9,42 +9,46 @@ import processing.core.PVector;
 public class automatedTraversal extends PApplet {
 	
 	public Terrain terrain;
-	public Vehicle rover;
-	float terrainX;
+	public Vehicle vehicle;
+	float terrainX; // x,y,z offsets for drawing terrain in 3D space
 	float terrainY;
 	float terrainZ;
 	
 	public automatedTraversal() {}
 	
 	public void settings() {
-		size(800,600, P3D);
+		size(800,600, P3D); // set size of canvas and specify it as 3D
 	}
-
+	
+	// like a constructor function run once at the beginning
 	public void setup() {
-		int terrainWidth = width*2;
+		int terrainWidth = width*2; // set dimensions of the terrain
 		int terrainHeight = height*2;
-		int terrainCols = 40;
+		int terrainCols = 40; // set resolution of terrain
 		int terrainRows = 40;
 		
-//		terrainX = -(float)width/2f;
-//		terrainY = -(float)height*(5f/6f);
-//		terrainZ = -400f;
-		
-		terrainX = -(float)width/2f;
+		terrainX = -(float)width/2f; // initialise offsets
 		terrainY = -(float)height*(1f/2f);
 		terrainZ = -50f;
 		
+		// initialise terrain object
 		terrain = new Terrain(this, terrainWidth, terrainHeight, terrainRows, terrainCols, terrainX, terrainY, terrainZ);
-		rover = new Vehicle(this, terrainWidth, terrainHeight, terrainRows, terrainCols);
+		// initialise rover object
+		vehicle = new Vehicle(this, terrainWidth, terrainHeight, terrainRows, terrainCols);
 	}
 	
+	// a draw loop executed once every frame
 	public void draw() {
-		background(51);
-		push();
-		rotateX(PConstants.PI/6);
+		background(51); // resets window to grey
+		push(); // starts a transformation stack
+		
+		rotateX(PConstants.PI/6); // rotates canvas
+		
+		// execute objects' for loops
 		terrain.update();
-		rover.update();
-		pop();
+		vehicle.update();
+		
+		pop(); // reverts all transformations to previous push()
 	}
 	
 	public void keyPressed() {
@@ -62,6 +66,7 @@ public class automatedTraversal extends PApplet {
 		}
 	}
 	
+	// Initialise sketch and run it using processing
 	public static void main(String[] args) {
 		String[] PArgs = {"Automated Traversal"};
 		automatedTraversal sketch = new automatedTraversal();
