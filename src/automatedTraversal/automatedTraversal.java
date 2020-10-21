@@ -43,7 +43,7 @@ public class automatedTraversal extends PApplet {
 		push();
 		rotateX(PConstants.PI/6);
 		terrain.update();
-		rover.update(terrainX, terrainY, terrainZ, terrain.getCenterPoint().getHeight());
+		rover.update();
 		pop();
 	}
 	

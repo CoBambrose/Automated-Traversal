@@ -31,7 +31,7 @@ public class Terrain {
 	
 	public void update() {
 		map = generator.generateMap(xoff, yoff);
-		renderer.update(map, x, y, z);
+		renderer.update(map, x, y, z - getCenterPoint().getHeight());
 	}
 	
 	public void move(PVector _dir) {
