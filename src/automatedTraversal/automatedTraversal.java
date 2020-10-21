@@ -1,8 +1,5 @@
 package automatedTraversal;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-
 import Terrain.Terrain;
 import Vehicle.Vehicle;
 import processing.core.PApplet;
