@@ -30,7 +30,7 @@ public class Renderer {
 		int cols = _map.length;
 		sketch.push(); // begin transformation stack
 		sketch.translate(_xoff, _yoff, _zoff); // offset by terrain location in sketch
-		sketch.directionalLight(255,255,255,0,0,-1); // place a white light at the top of the scene facing down (-Y)
+		sketch.directionalLight(255,255,255,-1,-1,-1); // place a white light at the top of the scene facing down (-Z)
 		sketch.strokeWeight(.5f); // set thickness of lines
 		
 		// for each column in terrain
@@ -41,7 +41,7 @@ public class Renderer {
 			for (int j = 0; j < rows; j++) {
 				// calculate colours corresponding to location properties
 				float temp = PApplet.map(_map[i][j].getTemperature(), 0, 100, 0, 255);
-				float density = PApplet.map(_map[i][j].getDensity(), 0, 10, 255, 0);
+				float density = PApplet.map(_map[i][j].getDensity(), 0, 10, 0, 255);
 				// set fill colour for triangle
 				sketch.fill(temp, 0, 255-temp);
 				// set border colour for triangle
