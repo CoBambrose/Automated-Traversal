@@ -56,4 +56,11 @@ public class Location {
 	public void setPos(PVector pos) {
 		this.pos = pos;
 	}
+	
+	public void print() {
+		System.out.println("Location: " + row + ", " + col);
+		System.out.println("    Height: " + height);
+		System.out.println("    Density: " + density);
+		System.out.println("    State: " + state);
+	}
 }

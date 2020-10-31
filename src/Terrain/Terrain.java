@@ -55,6 +55,15 @@ public class Terrain {
 		return map[(int)(cols/2)][(int)(rows/2)];
 	}
 	
+	public int[] getCenterCoords() {
+		int[] coords = {(int)(cols/2), (int)(rows/2)};
+		return coords;
+	}
+	
+	public Location getLocation(int _col, int _row) {
+		return map[_col][_row];
+	}
+	
 	public int getRows() {
 		return rows;
 	}

@@ -17,7 +17,7 @@ public class automatedTraversal extends PApplet {
 	public automatedTraversal() {}
 	
 	public void settings() {
-		size(800,600, P3D); // set size of canvas and specify it as 3D
+		size(1200, 900, P3D); // set size of canvas and specify it as 3D
 	}
 	
 	// like a constructor function run once at the beginning
@@ -40,15 +40,21 @@ public class automatedTraversal extends PApplet {
 	// a draw loop executed once every frame
 	public void draw() {
 		background(51); // resets window to grey
+		
 		push(); // starts a transformation stack
 		
 		rotateX(PConstants.PI/6); // rotates canvas
+		translate(0, -height/6f, 0);
 		
-		// execute objects' for loops
+		// execute objects' draw loops
 		terrain.update();
 		vehicle.update();
 		
 		pop(); // reverts all transformations to previous push()
+		
+		fill(0,0,0,100);
+		translate(width/2f, height*(3f/4f), height*(3f/4f));
+		box(width, height/2f, 1f);
 	}
 	
 	public void keyPressed() {
