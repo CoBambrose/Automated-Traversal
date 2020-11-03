@@ -46,6 +46,10 @@ public class Renderer {
 				sketch.fill(temp, 0, 255-temp);
 				// set border colour for triangle
 				sketch.stroke(density);
+				// doesn't draw outline for liquids
+				if (_map[i][j].getState() == 1) {
+					sketch.noStroke();
+				}
 				// place 2 vertices from on either side of T strip
 				sketch.vertex(_map[i][j].pos.x, _map[i][j].pos.y, _map[i][j].getHeight());
 				sketch.vertex(_map[i+1][j].pos.x, _map[i+1][j].pos.y, _map[i+1][j].getHeight());

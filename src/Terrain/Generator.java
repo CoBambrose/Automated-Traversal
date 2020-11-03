@@ -7,7 +7,7 @@ public class Generator {
 	
 	// declare variables
 	int width, height, rows, cols;
-	float roughness, magnitude;
+	float roughness, magnitude, melting_point;
 	automatedTraversal sketch;
 	Location[][] map;
 	
@@ -21,6 +21,7 @@ public class Generator {
 		cols = _cols;
 		roughness = _roughness;
 		magnitude = _magnitude;
+		melting_point = (float) (100.0 * 0.8);
 		sketch = _sketch;
 		
 		// generate terrain map
@@ -50,6 +51,11 @@ public class Generator {
 				// density(0 - 10 g/cm3)
 				float d = PApplet.map(sketch.noise((i+_xoff)/10f+100f, (j+_yoff)/10f+100f), 0, 1, 10, 0);
 				tempMap[i][j].setDensity(d);
+				// state(0 - Solid, 1 - Liquid)
+				int s = 0;
+				// if temperature is greater than melting point, it is liquid
+				if (t > melting_point) { s = 1; }
+				tempMap[i][j].setState(s);
 			}
 		}
 		return tempMap;

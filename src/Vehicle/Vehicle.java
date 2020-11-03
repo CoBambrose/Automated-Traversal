@@ -1,5 +1,6 @@
 package Vehicle;
 
+import NeuralNetwork.NeuralNetwork;
 import automatedTraversal.automatedTraversal;
 import processing.core.PVector;
 
@@ -9,6 +10,7 @@ public class Vehicle {
 	automatedTraversal sketch;
 	PVector pos;
 	PVector dim;
+	NeuralNetwork brain;
 	
 	public Vehicle(automatedTraversal _sketch, int _width, int _height, int _rows, int _cols) {
 		System.out.println("Vehicle created");
@@ -26,6 +28,9 @@ public class Vehicle {
 			_sketch.height / 2f,
 			-50f + dim.z/2
 		);
+		
+		// creates the vehicle's traversal AI
+//		brain = new NeuralNetwork();
 	}
 	
 	// runs every frame
