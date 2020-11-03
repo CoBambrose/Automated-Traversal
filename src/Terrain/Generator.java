@@ -21,7 +21,7 @@ public class Generator {
 		cols = _cols;
 		roughness = _roughness;
 		magnitude = _magnitude;
-		melting_point = (float) (100.0 * 0.8);
+		melting_point = (float) (100.0 * 0.5);
 		sketch = _sketch;
 		
 		// generate terrain map

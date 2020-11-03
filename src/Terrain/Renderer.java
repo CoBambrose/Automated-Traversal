@@ -48,7 +48,7 @@ public class Renderer {
 				sketch.stroke(density);
 				// doesn't draw outline for liquids
 				if (_map[i][j].getState() == 1) {
-					sketch.noStroke();
+					sketch.stroke(255,255,255,0);
 				}
 				// place 2 vertices from on either side of T strip
 				sketch.vertex(_map[i][j].pos.x, _map[i][j].pos.y, _map[i][j].getHeight());
