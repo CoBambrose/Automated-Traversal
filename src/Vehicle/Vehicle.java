@@ -1,6 +1,7 @@
 package Vehicle;
 
 import NeuralNetwork.NeuralNetwork;
+import Terrain.Terrain;
 import automatedTraversal.automatedTraversal;
 import processing.core.PVector;
 
@@ -45,6 +46,19 @@ public class Vehicle {
 		sketch.fill(255); // sets vehicle colour
 		sketch.box(dim.x, dim.y, dim.z); // draws cub(e/oid) with vehicle dimensions
 		sketch.pop(); // pops transformations from stack
+	}
+
+	public void train(Terrain terrain) {
+		double[] inputs = new double[27];
+		int[] centerCoords = terrain.getCenterCoords();
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				int[] neighbourCoords = {centerCoords[0]+i-1, centerCoords[1]+j-1};
+				inputs[3*(3*i+j)    ] = (double) terrain.getLocation(neighbourCoords[0], neighbourCoords[1]).getHeight();
+				inputs[3*(3*i+j) + 1] = (double) terrain.getLocation(neighbourCoords[0], neighbourCoords[1]).getDensity();
+				inputs[3*(3*i+j) + 2] = (double) terrain.getLocation(neighbourCoords[0], neighbourCoords[1]).getTemperature();
+			}
+		}
 	}
 	
 }

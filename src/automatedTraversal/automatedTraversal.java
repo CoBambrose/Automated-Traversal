@@ -14,6 +14,7 @@ public class automatedTraversal extends PApplet {
 	float terrainX; // x,y,z offsets for drawing terrain in 3D space
 	float terrainY;
 	float terrainZ;
+	boolean trainingMode = true;
 	
 	public automatedTraversal() {}
 	
@@ -49,15 +50,20 @@ public class automatedTraversal extends PApplet {
 		rotateX(PConstants.PI/6); // rotates canvas
 		translate(0, -height/6f, 0);
 		
-		// execute objects' draw loops
+		// execute objects' updates
 		terrain.update();
 		vehicle.update();
 		
 		pop(); // reverts all transformations to previous push()
 		
-		fill(0,0,0,100);
-		translate(width/2f, height*(3f/4f), height*(3f/4f));
-		box(width, height/2f, 1f);
+		// display screen
+//		fill(0,0,0,100);
+//		translate(width/2f, height*(3f/4f), height*(3f/4f));
+//		box(width, height/2f, 1f);
+		
+		if (trainingMode && frameCount == 1) {
+			vehicle.train(terrain);
+		}
 	}
 	
 	public void keyPressed() {
