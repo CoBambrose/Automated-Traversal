@@ -1,8 +1,15 @@
 package NeuralNetwork;
 
-public class NeuralNetwork {
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+public class NeuralNetwork implements java.io.Serializable {
 	
 	// declare variables
+	private static final long serialVersionUID = -6501992245045165575L;
 	private int inputNodes;
 	private int hidden1Nodes;
 	private int hidden2Nodes;
@@ -118,37 +125,36 @@ public class NeuralNetwork {
 		// return the total error
 		return MSE;
 	}
+	
+	public void serialise() {
+		try {
+			String outFile = "serialised/nn.txt";
+			FileOutputStream fos = new FileOutputStream(outFile);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(this);
+			oos.close();
+			fos.close();
+			System.out.println("Serialised data is saved in " + outFile);
+		} catch (IOException i) {
+			System.out.println("Not able to be serialised");
+			i.printStackTrace();
+		}
+	}
+	
+	public static NeuralNetwork deserialise() {
+		try {
+			String inFile = "serialised/nn.txt";
+			FileInputStream fis = new FileInputStream(inFile);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			NeuralNetwork nn = (NeuralNetwork) ois.readObject();
+			fis.close();
+			ois.close();
+			System.out.println("Deserialised data saved in " + inFile);
+			return nn;
+		} catch (IOException | ClassNotFoundException i) {
+			System.out.println("Not able to be deserialised");
+			i.printStackTrace();
+		}
+		return null;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

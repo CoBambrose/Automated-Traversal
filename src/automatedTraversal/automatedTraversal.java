@@ -1,5 +1,6 @@
 package automatedTraversal;
 
+import NeuralNetwork.NeuralNetwork;
 import Terrain.Terrain;
 import Vehicle.Vehicle;
 import processing.core.PApplet;
@@ -35,6 +36,8 @@ public class automatedTraversal extends PApplet {
 		terrain = new Terrain(this, terrainWidth, terrainHeight, terrainRows, terrainCols, terrainX, terrainY, terrainZ);
 		// initialise rover object
 		vehicle = new Vehicle(this, terrainWidth, terrainHeight, terrainRows, terrainCols);
+		// load the rover's last trained brain
+//		vehicle.brain = NeuralNetwork.deserialise();
 	}
 	
 	// a draw loop executed once every frame

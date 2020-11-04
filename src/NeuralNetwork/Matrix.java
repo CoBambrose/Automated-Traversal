@@ -1,7 +1,8 @@
 package NeuralNetwork;
 
-public class Matrix {
+public class Matrix implements java.io.Serializable {
 	
+	private static final long serialVersionUID = -6647910081212069200L;
 	int rows; // dimensions of matrix
 	int cols;
 	public double[][] data; // values stored in the matrix

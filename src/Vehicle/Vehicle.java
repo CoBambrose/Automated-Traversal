@@ -10,7 +10,7 @@ public class Vehicle {
 	automatedTraversal sketch;
 	PVector pos;
 	PVector dim;
-	NeuralNetwork brain;
+	public NeuralNetwork brain;
 	
 	public Vehicle(automatedTraversal _sketch, int _width, int _height, int _rows, int _cols) {
 		System.out.println("Vehicle created");
@@ -30,7 +30,7 @@ public class Vehicle {
 		);
 		
 		// creates the vehicle's traversal AI
-//		brain = new NeuralNetwork();
+		brain = new NeuralNetwork(27, 10, 10, 8);
 	}
 	
 	// runs every frame
