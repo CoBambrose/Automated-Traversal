@@ -8,6 +8,7 @@ public class Location {
 	int row, col;
 	PVector pos;
 	private float height, temperature, density;
+	private float normalHeight, normalTemperature, normalDensity;
 	private int state;
 	
 	public Location(int _row, int _col, float _x, float _y) {
@@ -21,7 +22,8 @@ public class Location {
 		return height;
 	}
 
-	public void setHeight(float height) {
+	public void setHeight(float normalHeight, float height) {
+		this.normalHeight = normalHeight;
 		this.height = height;
 	}
 
@@ -29,7 +31,8 @@ public class Location {
 		return temperature;
 	}
 
-	public void setTemperature(float temperature) {
+	public void setTemperature(float normalTemperature, float temperature) {
+		this.normalTemperature = normalTemperature;
 		this.temperature = temperature;
 	}
 
@@ -37,7 +40,8 @@ public class Location {
 		return density;
 	}
 
-	public void setDensity(float density) {
+	public void setDensity(float normalDensity, float density) {
+		this.normalDensity = normalDensity;
 		this.density = density;
 	}
 
@@ -55,6 +59,14 @@ public class Location {
 
 	public void setPos(PVector pos) {
 		this.pos = pos;
+	}
+	
+	public double[] getNormalisedProperties() {
+		double[] returnVal = new double[3];
+		returnVal[0] = (double)normalHeight;
+		returnVal[1] = (double)normalTemperature;
+		returnVal[2] = (double)normalDensity;
+		return returnVal;
 	}
 	
 	public void print() {

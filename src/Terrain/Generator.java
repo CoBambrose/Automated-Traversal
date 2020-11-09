@@ -43,18 +43,21 @@ public class Generator {
 				// initialise location
 				tempMap[i][j] = new Location(j, i, i*colSize, j*rowSize);
 				// height(arbitrary units)
-				float h = PApplet.map(sketch.noise((i+_xoff)/roughness, (j+_yoff)/roughness), 0, 1, -magnitude, magnitude);
-				tempMap[i][j].setHeight(h);
+				float nh = sketch.noise((i+_xoff)/roughness, (j+_yoff)/roughness);
+				float h = PApplet.map(nh, 0, 1, -magnitude, magnitude);
+				tempMap[i][j].setHeight(nh, h);
 				// temperature(0 - 100 C)
-				float t = PApplet.map(sketch.noise((i+_xoff)/10f+100f, (j+_yoff)/10f+100f), 0, 1, 0, 100);
-				tempMap[i][j].setTemperature(t);
+				float nt = sketch.noise((i+_xoff)/10f+100f, (j+_yoff)/10f+100f);
+				float t = PApplet.map(nt, 0, 1, 0, 100);
+				tempMap[i][j].setTemperature(nt, t);
 				// density(0 - 10 g/cm3)
-				float d = PApplet.map(sketch.noise((i+_xoff)/10f+100f, (j+_yoff)/10f+100f), 0, 1, 10, 0);
-				tempMap[i][j].setDensity(d);
+				float nd = sketch.noise((i+_xoff)/10f+100f, (j+_yoff)/10f+100f);
+				float d = PApplet.map(nd, 0, 1, 10, 0);
+				tempMap[i][j].setDensity(nd, d);
 				// state(0 - Solid, 1 - Liquid)
 				int s = 0;
-				// if temperature is greater than melting point, it is liquid
-				if (t > melting_point) { s = 1; }
+				// if temperature reaches melting point, it is liquid
+				if (t >= melting_point) { s = 1; }
 				tempMap[i][j].setState(s);
 			}
 		}

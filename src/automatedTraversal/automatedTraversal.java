@@ -69,15 +69,19 @@ public class automatedTraversal extends PApplet {
 	public void keyPressed() {
 		if (keyCode == LEFT) {
 			terrain.move(new PVector(-1, 0));
+			vehicle.train(terrain);
 		}
 		if (keyCode == RIGHT) {
 			terrain.move(new PVector(1, 0));
+			vehicle.train(terrain);
 		}
 		if (keyCode == UP) {
 			terrain.move(new PVector(0, -1));
+			vehicle.train(terrain);
 		}
 		if (keyCode == DOWN) {
 			terrain.move(new PVector(0, 1));
+			vehicle.train(terrain);
 		}
 	}
 	
