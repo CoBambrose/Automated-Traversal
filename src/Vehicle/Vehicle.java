@@ -50,35 +50,49 @@ public class Vehicle {
 		sketch.pop(); // pops transformations from stack
 	}
 
-	public void train(Terrain terrain) {
+	public void learn(Terrain terrain) {
 		double[] inputs = new double[27];
-		int[] centerCoords = terrain.getCenterCoords();
-		double[] traversabilities = new double[8];
-		double[] centerNormals = terrain.getLocation(centerCoords[0], centerCoords[1]).getNormalisedProperties();
+		double[] targets = new double[8];
+		
+		double[] current = terrain.getLocation(terrain.getCenterCoords()[0], terrain.getCenterCoords()[1]).getNormalisedProperties();
+		
+		int highestIndex = -1;
+		double highestHeuristic = 0d;
+		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
+				double[] neighbour = terrain.getLocation(terrain.getCenterCoords()[0] + i - 1, terrain.getCenterCoords()[1] + j - 1).getNormalisedProperties();
+				
 				// inputs array
-				int[] neighbourCoords = {centerCoords[0]+i-1, centerCoords[1]+j-1};
-				Location neighbour = terrain.getLocation(neighbourCoords[0], neighbourCoords[1]);
-				inputs[3*(3*i+j)    ] = (double) neighbour.getHeight();
-				inputs[3*(3*i+j) + 1] = (double) neighbour.getDensity();
-				inputs[3*(3*i+j) + 2] = (double) neighbour.getTemperature();
+				inputs[i*3+j + 0] = neighbour[0];
+				inputs[i*3+j + 1] = neighbour[1];
+				inputs[i*3+j + 2] = neighbour[2];
+				
 				// targets array
-				double[] neighbourNormals = neighbour.getNormalisedProperties();
-				double hScore = (centerNormals[0] - neighbourNormals[0] + 1) / 2;
-				double tScore = 1 - Math.sqrt(2 * neighbourNormals[1] - Math.pow(neighbourNormals[1], 2));
-				double dScore = Math.sqrt(2 * neighbourNormals[2] - Math.pow(neighbourNormals[2], 2));
-				if (3*i+j < 4) {
-					traversabilities[3*i+j] = (hScore + tScore + dScore) / 3d;
-				} else if (3*i+j > 4) {
-					traversabilities[3*i+j-1] = (hScore + tScore + dScore) / 3d;
+				double hScore = Math.abs(current[0] - neighbour[0]);
+				double tScore = Math.pow(1d-Math.pow(neighbour[1], 2d), 1d/2d);
+				double dScore = Math.pow(2d * neighbour[1] - Math.pow(neighbour[1], 2d), 1d/2d);
+				
+				if (i*3 + j < 5) {
+					targets[i*3+j] = (hScore + tScore + dScore) / 3d;
+					if (targets[i*3+j] > highestHeuristic) {
+						highestHeuristic = targets[i*3+j];
+						highestIndex = i*3+j;
+					}
+				} else if (i*3 + j > 5) {
+					targets[i*3+j-1] = (hScore + tScore + dScore) / 3d;
+					if (targets[i*3+j-1] > highestHeuristic) {
+						highestHeuristic = targets[i*3+j-1];
+						highestIndex = i*3+j-1;
+					}
 				}
 			}
 		}
+		
 		for (int i = 0; i < 8; i++) {
-			System.out.println(traversabilities[i]);
+			targets[i] = 0.001d;
 		}
-		System.out.println("- - - - -");
+		targets[highestIndex] = 0.999d;
 	}
 	
 }

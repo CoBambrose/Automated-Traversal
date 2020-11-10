@@ -1,6 +1,5 @@
 package automatedTraversal;
 
-import NeuralNetwork.NeuralNetwork;
 import Terrain.Terrain;
 import Vehicle.Vehicle;
 import processing.core.PApplet;
@@ -62,26 +61,26 @@ public class automatedTraversal extends PApplet {
 //		box(width, height/2f, 1f);
 		
 		if (trainingMode && frameCount == 1) {
-			vehicle.train(terrain);
+			vehicle.learn(terrain);
 		}
 	}
 	
 	public void keyPressed() {
 		if (keyCode == LEFT) {
 			terrain.move(new PVector(-1, 0));
-			vehicle.train(terrain);
+			vehicle.learn(terrain);
 		}
 		if (keyCode == RIGHT) {
 			terrain.move(new PVector(1, 0));
-			vehicle.train(terrain);
+			vehicle.learn(terrain);
 		}
 		if (keyCode == UP) {
 			terrain.move(new PVector(0, -1));
-			vehicle.train(terrain);
+			vehicle.learn(terrain);
 		}
 		if (keyCode == DOWN) {
 			terrain.move(new PVector(0, 1));
-			vehicle.train(terrain);
+			vehicle.learn(terrain);
 		}
 	}
 	
