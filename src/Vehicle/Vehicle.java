@@ -50,7 +50,7 @@ public class Vehicle {
 		sketch.pop(); // pops transformations from stack
 	}
 
-	public void learn(Terrain terrain) {
+	public int learn(Terrain terrain) {
 		double[] inputs = new double[27];
 		double[] targets = new double[8];
 		
@@ -93,6 +93,8 @@ public class Vehicle {
 			targets[i] = 0.001d;
 		}
 		targets[highestIndex] = 0.999d;
+		
+		return highestIndex;
 	}
 	
 }

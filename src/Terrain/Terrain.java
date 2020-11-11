@@ -10,7 +10,7 @@ public class Terrain {
 	Location[][] map;
 	int width, height;
 	int rows, cols;
-	int xoff, yoff;
+	public int xoff, yoff;
 	float x,y,z;
 	
 	// declare components

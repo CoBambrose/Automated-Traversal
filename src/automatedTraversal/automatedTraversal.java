@@ -15,6 +15,8 @@ public class automatedTraversal extends PApplet {
 	float terrainZ;
 	boolean trainingMode = true;
 	
+	PVector prevDir = new PVector(-999,-999);
+	
 	public automatedTraversal() {}
 	
 	public void settings() {
@@ -25,8 +27,8 @@ public class automatedTraversal extends PApplet {
 	public void setup() {
 		int terrainWidth = width*2; // set dimensions of the terrain
 		int terrainHeight = height*2;
-		int terrainCols = 40; // set resolution of terrain
-		int terrainRows = 40;
+		int terrainCols = 80; // set resolution of terrain
+		int terrainRows = 80;
 		
 		terrainX = -(float)width/2f; // initialise offsets
 		terrainY = -(float)height*(1f/2f);
@@ -60,8 +62,21 @@ public class automatedTraversal extends PApplet {
 //		translate(width/2f, height*(3f/4f), height*(3f/4f));
 //		box(width, height/2f, 1f);
 		
-		if (trainingMode && frameCount == 1) {
-			vehicle.learn(terrain);
+		if (trainingMode && frameCount % 20 == 0) {
+			int val = vehicle.learn(terrain);
+			if (val > 3) {val++;}
+			int xDir = val % 3 - 1;
+			int yDir = val / 3 - 1;
+			
+			if (xDir == -prevDir.x && yDir == -prevDir.y) {
+				xDir *= -1;
+				yDir *= -1;
+			}
+			if (Math.random() < 0.1) {
+				xDir = -1;
+			}
+			terrain.move(new PVector(xDir, yDir));
+			prevDir = new PVector(xDir, yDir);
 		}
 	}
 	
