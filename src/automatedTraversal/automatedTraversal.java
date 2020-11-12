@@ -1,11 +1,10 @@
 package automatedTraversal;
 
+import GUI.GUI;
 import NeuralNetwork.NeuralNetwork;
 import Terrain.Terrain;
 import Vehicle.Vehicle;
 import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class automatedTraversal extends PApplet {
@@ -15,10 +14,8 @@ public class automatedTraversal extends PApplet {
 	float terrainX; // x,y,z offsets for drawing terrain in 3D space
 	float terrainY;
 	float terrainZ;
-	PGraphics gui;
-	boolean trainingMode = false;
-	
-	PVector prevDir = new PVector(-999,-999);
+	GUI gui;
+	boolean trainingMode = true;
 	
 	public automatedTraversal() {}
 	
@@ -43,12 +40,12 @@ public class automatedTraversal extends PApplet {
 		vehicle = new Vehicle(this, terrainWidth, terrainHeight, terrainRows, terrainCols);
 		vehicle.brain = NeuralNetwork.deserialise();
 		// initialise GUI
-		gui = createGraphics(1200, 450);
+		gui = new GUI(this);
 		
 		if (trainingMode) {
 			int epochs = 100001;
 			for (int i = 0; i < epochs; i++) {
-				PVector dir = vehicle.update(terrain, trainingMode);
+				PVector dir = vehicle.update(terrain, 0, trainingMode);
 				terrain.move(dir);
 				
 				if (i % 10000 == 0) {
@@ -67,34 +64,16 @@ public class automatedTraversal extends PApplet {
 		push(); // starts a transformation stack
 		hint(ENABLE_DEPTH_TEST);
 		
-		rotateX(PConstants.PI/6); // rotates canvas
+		rotateX(PI/6); // rotates canvas
 		translate(0, -height/6f, 0);
 		directionalLight(255,255,255,-1,-1,-1); // place a white light in the scene
 
-		PVector dir = vehicle.update(terrain, trainingMode);
+		PVector dir = vehicle.update(terrain, 5, trainingMode);
 		terrain.update(dir);
 		
 		pop(); // reverts all transformations to previous push()
-		hint(DISABLE_DEPTH_TEST);
 		
-		// display screen
-//		push();
-//		fill(0,0,0,100);
-//		translate(width/2f, height*(3f/4f), 0);
-//		box(width, height/2f, 1f);
-//		fill(255);
-//		stroke(255);
-//		textMode(CENTER);
-//		textSize(32);
-//		text("Hello", width, height);
-//		pop();
-		
-		gui.beginDraw();
-		gui.background(0,0,0,100);
-		gui.fill(255);
-		gui.text("Hello World!", 0, 0, width, height/2f);
-		gui.endDraw();
-		image(gui.get(), 0, height/2f, width, height/2f);
+		gui.update(terrain, vehicle);
 	}
 	
 	public void keyPressed() {

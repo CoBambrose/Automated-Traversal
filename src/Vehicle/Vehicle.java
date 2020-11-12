@@ -1,12 +1,8 @@
 package Vehicle;
 
-import java.util.Arrays;
-
 import NeuralNetwork.NeuralNetwork;
-import Terrain.Location;
 import Terrain.Terrain;
 import automatedTraversal.automatedTraversal;
-import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Vehicle {
@@ -39,13 +35,13 @@ public class Vehicle {
 	}
 	
 	// runs every frame
-	public PVector update(Terrain _terrain, boolean _trainingMode) {
+	public PVector update(Terrain _terrain, int speed, boolean _trainingMode) {
 		PVector dir = new PVector(0,0);
 		if (_trainingMode && sketch.frameCount == 0) {
 			dir = learn(_terrain);
-		} else if (_trainingMode && sketch.frameCount % 20 == 0) {
+		} else if (_trainingMode && sketch.frameCount % speed == 0) {
 			dir = learn(_terrain);
-		} else if (sketch.frameCount % 20 == 0) {
+		} else if (sketch.frameCount % speed == 0) {
 			dir = traverse(_terrain);
 		}
 		render();
