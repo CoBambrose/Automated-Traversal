@@ -30,7 +30,6 @@ public class Renderer {
 		int cols = _map.length;
 		sketch.push(); // begin transformation stack
 		sketch.translate(_xoff, _yoff, _zoff); // offset by terrain location in sketch
-		sketch.directionalLight(255,255,255,-1,-1,-1); // place a white light at the top of the scene facing down (-Z)
 		sketch.strokeWeight(.5f); // set thickness of lines
 		
 		// for each column in terrain

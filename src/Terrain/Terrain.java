@@ -37,7 +37,8 @@ public class Terrain {
 	}
 	
 	// runs every draw loop
-	public void update() {
+	public void update(PVector _movement) {
+		move(_movement);
 		// regenerate map based on new position of rover
 		map = generator.generateMap(xoff, yoff);
 		// redraw the terrain

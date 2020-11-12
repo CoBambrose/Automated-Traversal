@@ -15,6 +15,7 @@ public class NeuralNetwork implements java.io.Serializable {
 	private int hidden2Nodes;
 	private int outputNodes;
 	private double learning_rate;
+	private double error;
 	public Matrix[] weights;
 	public Matrix[] biases;
 
@@ -122,6 +123,8 @@ public class NeuralNetwork implements java.io.Serializable {
 			}
 		}
 		
+		error = MSE;
+		
 		// return the total error
 		return MSE;
 	}
@@ -149,12 +152,16 @@ public class NeuralNetwork implements java.io.Serializable {
 			NeuralNetwork nn = (NeuralNetwork) ois.readObject();
 			fis.close();
 			ois.close();
-			System.out.println("Deserialised data saved in " + inFile);
+			System.out.println("Deserialised data loaded from " + inFile);
 			return nn;
 		} catch (IOException | ClassNotFoundException i) {
 			System.out.println("Not able to be deserialised");
 			i.printStackTrace();
 		}
 		return null;
+	}
+
+	public double getError() {
+		return error;
 	}
 }

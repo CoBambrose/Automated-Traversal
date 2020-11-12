@@ -1,5 +1,6 @@
 package automatedTraversal;
 
+import NeuralNetwork.NeuralNetwork;
 import Terrain.Terrain;
 import Vehicle.Vehicle;
 import processing.core.PApplet;
@@ -38,8 +39,23 @@ public class automatedTraversal extends PApplet {
 		terrain = new Terrain(this, terrainWidth, terrainHeight, terrainRows, terrainCols, terrainX, terrainY, terrainZ);
 		// initialise rover object
 		vehicle = new Vehicle(this, terrainWidth, terrainHeight, terrainRows, terrainCols);
-		// load the rover's last trained brain
-//		vehicle.brain = NeuralNetwork.deserialise();
+		
+		vehicle.brain = NeuralNetwork.deserialise();
+		
+		if (trainingMode) {
+			int epochs = 100001;
+			for (int i = 0; i < epochs; i++) {
+				PVector dir = vehicle.update(terrain, trainingMode);
+				terrain.move(dir);
+				
+				if (i % 10000 == 0) {
+					System.out.println(i/10000 + " / " + epochs/10000);
+					System.out.println(vehicle.brain.getError());
+				}
+			}
+			vehicle.brain.serialise();
+		}
+		
 	}
 	
 	// a draw loop executed once every frame
@@ -50,34 +66,17 @@ public class automatedTraversal extends PApplet {
 		
 		rotateX(PConstants.PI/6); // rotates canvas
 		translate(0, -height/6f, 0);
-		
-		// execute objects' updates
-		terrain.update();
-		vehicle.update();
+		directionalLight(255,255,255,-1,-1,-1); // place a white light at the top of the scene facing down (-Z)
+
+		PVector dir = vehicle.update(terrain, trainingMode);
+		terrain.update(dir);
 		
 		pop(); // reverts all transformations to previous push()
 		
 		// display screen
-//		fill(0,0,0,100);
-//		translate(width/2f, height*(3f/4f), height*(3f/4f));
-//		box(width, height/2f, 1f);
-		
-		if (trainingMode && frameCount % 20 == 0) {
-			int val = vehicle.learn(terrain);
-			if (val > 3) {val++;}
-			int xDir = val % 3 - 1;
-			int yDir = val / 3 - 1;
-			
-			if (xDir == -prevDir.x && yDir == -prevDir.y) {
-				xDir *= -1;
-				yDir *= -1;
-			}
-			if (Math.random() < 0.1) {
-				xDir = -1;
-			}
-			terrain.move(new PVector(xDir, yDir));
-			prevDir = new PVector(xDir, yDir);
-		}
+		fill(0,0,0,100);
+		translate(width/2f, height*(3f/4f), height*(3f/4f));
+		box(width, height/2f, 1f);
 	}
 	
 	public void keyPressed() {
