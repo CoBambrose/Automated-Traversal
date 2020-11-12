@@ -131,11 +131,6 @@ public class Vehicle {
 				highestVal = traversabilities[i];
 			}
 		}
-
-		for (double val : traversabilities) {
-			System.out.println(val);
-		}
-		System.out.println();
 		
 		return indexToVector(highestIndex);
 	}
